@@ -45,10 +45,10 @@ class GraphPage(QMainWindow):
         self.graph.draw()
 
     def graph(self):
-        x = [0,1,2,3,4]
-        y = [random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4)]
-        height = random.randint(1,4)
-        z = [height,height,height,height,height]
+        x = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
+        y = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
+        height = random.randint(1,100)
+        z = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
         self.graph.axes.plot(x,y,z)
         self.graph.draw()
 
