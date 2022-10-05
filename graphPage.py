@@ -11,9 +11,9 @@ class GraphPage(QMainWindow):
         self.setWindowTitle("Graph Page")
         self.window = QGridLayout()
         
-        mainWidget = QWidget()
-        mainWidget.setLayout(self.window)
-        self.setCentralWidget(mainWidget)
+        self.mainWidget = QWidget()
+        self.mainWidget.setLayout(self.window)
+        self.setCentralWidget(self.mainWidget)
         self.initUI()
 
 
@@ -32,23 +32,25 @@ class GraphPage(QMainWindow):
         button = QPushButton("Graph")
         button.clicked.connect(self.graph)
 
-        button3 = QPushButton("Clear")
-        button3.clicked.connect(self.clear)
 
-        self.sc = MplCanvas(self, width=5, height=4, dpi=100)
-
-        self.window.addWidget(self.sc,0,0)
-        self.window.addWidget(button,0,1)
-        self.window.addWidget(button3,0,2)
-        self.window.addWidget(button3,2,0)
+        clear = QPushButton("Clear")
+        clear.clicked.connect(self.clear)
+        self.graph = MplCanvas(is3d=True)
+        self.window.addWidget(self.graph,0,0)
+        self.window.addWidget(button,1,0)
+        self.window.addWidget(clear,2,0)
 
     def clear(self):
-        self.sc.axes.clear()
-        self.sc.draw()
+        self.graph.axes.clear()
+        self.graph.draw()
 
     def graph(self):
-        self.sc.axes.plot([0,1,2,3,4], [random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4)])
-        self.sc.draw()
+        x = [0,1,2,3,4]
+        y = [random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4),random.randint(1,4)]
+        height = random.randint(1,4)
+        z = [height,height,height,height,height]
+        self.graph.axes.plot(x,y,z)
+        self.graph.draw()
 
 
     

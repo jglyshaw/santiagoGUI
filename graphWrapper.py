@@ -1,8 +1,22 @@
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 
-class MplCanvas(FigureCanvasQTAgg):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
-        super(MplCanvas, self).__init__(fig)
+class MplCanvas(FigureCanvas):
+    def __init__(self, is3d=False):
+        self.fig=Figure()
+        self.degreesVertical = 0
+        self.degreesHoriztonal = 0
+        FigureCanvas.__init__(self,self.fig)
+        
+        self.fig.clear()
+
+        if is3d:
+            self.axes=self.fig.add_subplot(111,projection="3d")
+        else:
+            self.axes=self.fig.add_subplot(111)
+
+        self.toolbar = NavigationToolbar(self, self)
+
+
+ 
