@@ -8,6 +8,7 @@ class GraphApp(QMainWindow):
         self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
         
+        
         self.mainWidget = QWidget()
         self.mainWidget.setLayout(self.window)
         self.setCentralWidget(self.mainWidget)
@@ -32,6 +33,9 @@ class GraphApp(QMainWindow):
 
         clear = QPushButton("Clear")
         clear.clicked.connect(lambda : self.graph.clearGraph())
+
+        move = QPushButton("Hide Grid")
+        move.clicked.connect(lambda : self.graph.hide_background())
         
         #graph component
         self.graph = MPLGraph(is3d=True)
@@ -40,6 +44,7 @@ class GraphApp(QMainWindow):
         self.window.addWidget(self.graph,0,0)
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,2,0)
+        self.window.addWidget(move,3,0)
 
 
     def graph(self):
