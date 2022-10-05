@@ -1,14 +1,14 @@
 import random
-from graphWrapper import MplCanvas
+from components.graphWrapper import MplCanvas
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 
 
-class GraphPage(QMainWindow):
+class GraphApp(QMainWindow):
     def __init__(self): 
-        super(GraphPage, self).__init__()
+        super(GraphApp, self).__init__()
         
-        self.setWindowTitle("Graph Page")
+        self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
         
         self.mainWidget = QWidget()
@@ -18,40 +18,37 @@ class GraphPage(QMainWindow):
 
 
     def initUI(self):
+
+        #menubar
         exitAct = QAction(QIcon('exit.png'), '&Exit', self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('Exit application')
         exitAct.triggered.connect(qApp.quit)
-
         self.statusBar()
-
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(exitAct)
 
+        #buttons
         button = QPushButton("Graph")
         button.clicked.connect(self.graph)
 
-
         clear = QPushButton("Clear")
-        clear.clicked.connect(self.clear)
+        clear.clicked.connect(lambda : self.graph.clearGraph())
+        
+        #graph component
         self.graph = MplCanvas(is3d=True)
+
+        #add widgets
         self.window.addWidget(self.graph,0,0)
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,2,0)
 
-    def clear(self):
-        self.graph.axes.clear()
-        self.graph.draw()
 
     def graph(self):
-        x = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
-        y = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
-        height = random.randint(1,100)
-        z = [random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20),random.randint(1,20)]
-        self.graph.axes.plot(x,y,z)
-        self.graph.draw()
-
-
-    
-  
+        a = 1
+        b = 200
+        x = [random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b)]
+        y = [random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b)]
+        z = [random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b),random.randint(a,b)]
+        self.graph.newPlot(x,y,z)

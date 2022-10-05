@@ -12,3 +12,12 @@ class MplCanvas(FigureCanvas):
             self.axes=self.fig.add_subplot(111,projection="3d")
         else:
             self.axes=self.fig.add_subplot(111)
+    
+    def newPlot(self,x,y,z=None):
+        self.axes.plot(x,y,z)
+        self.draw()
+
+    def clearGraph(self):
+        self.axes.clear()
+        self.draw()
+        
