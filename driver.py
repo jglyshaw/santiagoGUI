@@ -1,16 +1,8 @@
+import sys
 from apps.GraphApp import GraphApp
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtWidgets import *
 
-app = QApplication([])
-
-graph = GraphApp()
-graph.show()
-
+app = QApplication(sys.argv)
+w = GraphApp()
+w.show()
 app.exec()
-
-
-
-
-
-
-

@@ -1,6 +1,8 @@
+
+
+from PyQt6.QtWidgets import *
+from components.MPLGraph import MPLGraph
 import random
-from components.graphWrapper import MPLGraph
-from PyQt5.QtWidgets import *
 
 class GraphApp(QMainWindow):
     def __init__(self): 
@@ -17,19 +19,11 @@ class GraphApp(QMainWindow):
 
     def initUI(self):
 
-        #menubar
-        exitAct = QAction('&Exit', self)
-        exitAct.setShortcut('Ctrl+Q')
-        exitAct.setStatusTip('Exit application')
-        exitAct.triggered.connect(qApp.quit)
-        self.statusBar()
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exitAct)
+
 
         #buttons
         button = QPushButton("Graph")
-        button.clicked.connect(self.graph)
+        button.clicked.connect(self.graphData)
 
         clear = QPushButton("Clear")
         clear.clicked.connect(lambda : self.graph.clearGraph())
@@ -47,7 +41,7 @@ class GraphApp(QMainWindow):
         self.window.addWidget(move,3,0)
 
 
-    def graph(self):
+    def graphData(self):
         a  = 0
         b = 4000
         x = []
