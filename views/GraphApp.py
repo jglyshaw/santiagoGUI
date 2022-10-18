@@ -1,7 +1,7 @@
 
 
 from PyQt6.QtWidgets import *
-from components.Graph3D import Graph3D
+from controllers.Graph3D import Graph3D
 import matlab.engine
 import random
 

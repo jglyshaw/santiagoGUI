@@ -2,8 +2,8 @@ import sys
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-from apps.GraphApp import GraphApp
-from components.Graph3D import Graph3D
+from views.GraphApp import GraphApp
+from controllers.Graph3D import Graph3D
 
 class MainApp(QTabWidget):
    def __init__(self, parent = None):
