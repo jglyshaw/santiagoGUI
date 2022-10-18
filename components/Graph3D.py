@@ -5,12 +5,14 @@ from matplotlib.figure import Figure
 
 class Graph3D(FigureCanvasQTAgg):
     def __init__(self):
-        self.fig = Figure(figsize=(300, 300), dpi=50)
+        self.fig = Figure(figsize=(1000, 1000), dpi=50)
         FigureCanvasQTAgg.__init__(self,self.fig)
         super(Graph3D, self).__init__(self.fig)
 
         self.fig.canvas.mpl_connect('key_press_event', self.on_press)
+
         self.axes=self.fig.add_subplot(111,projection="3d")
+        self.fig.tight_layout()
     
     def newPlot(self,x,y,z):
         self.fig.canvas.setFocus()

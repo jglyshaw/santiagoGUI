@@ -10,7 +10,7 @@ class GraphApp(QWidget):
         super(GraphApp, self).__init__()
         self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
-        self.eng = matlab.engine.start_matlab()
+        # self.eng = matlab.engine.start_matlab()
         self.setLayout(self.window)
         self.initUI()
 
