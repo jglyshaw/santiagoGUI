@@ -1,26 +1,21 @@
 
 
 from PyQt6.QtWidgets import *
-from components.MPLGraph import MPLGraph
+from components.Graph3D import Graph3D
+import matlab.engine
 import random
 
-class GraphApp(QMainWindow):
+class GraphApp(QWidget):
     def __init__(self): 
         super(GraphApp, self).__init__()
         self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
-        
-        
-        self.mainWidget = QWidget()
-        self.mainWidget.setLayout(self.window)
-        self.setCentralWidget(self.mainWidget)
+        self.eng = matlab.engine.start_matlab()
+        self.setLayout(self.window)
         self.initUI()
 
 
     def initUI(self):
-
-
-
         #buttons
         button = QPushButton("Graph")
         button.clicked.connect(self.graphData)
@@ -32,7 +27,7 @@ class GraphApp(QMainWindow):
         move.clicked.connect(lambda : self.graph.hide_background())
         
         #graph component
-        self.graph = MPLGraph(is3d=True)
+        self.graph = Graph3D()
 
         #add widgets
         self.window.addWidget(self.graph,0,0)
@@ -56,3 +51,17 @@ class GraphApp(QMainWindow):
             z.append(a)
 
         self.graph.newPlot(x,y,z)
+
+    def graphData2(self):
+        x = list(self.eng.data()[0])
+        y = list(self.eng.data()[1])
+        z = list(self.eng.data()[2])
+
+        self.graph.newPlot(x,y,z)
+
+
+if __name__ == "__main__":
+    app = QApplication([])
+    w = GraphApp()
+    w.show()
+    app.exec()
