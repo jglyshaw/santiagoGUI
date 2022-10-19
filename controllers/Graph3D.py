@@ -3,7 +3,7 @@ from matplotlib.figure import Figure
 
 class Graph3D(FigureCanvasQTAgg):
     def __init__(self):
-        self.fig = Figure(figsize=(1000, 1000), dpi=50)
+        self.fig = Figure(figsize=(100, 100), dpi=100)
         FigureCanvasQTAgg.__init__(self,self.fig)
         super(Graph3D, self).__init__(self.fig)
 
@@ -12,9 +12,14 @@ class Graph3D(FigureCanvasQTAgg):
         self.axes=self.fig.add_subplot(111,projection="3d")
         self.fig.tight_layout()
     
-    def newPlot(self,x,y,z):
+    def scatterPlot(self,x,y,z):
         self.fig.canvas.setFocus()
-        self.axes.plot(x,y,z, color='g')
+        self.axes.scatter(x,y,z, color='b', marker='o', s=0.5)
+        self.draw()
+
+    def linePlot(self,x,y,z):
+        self.fig.canvas.setFocus()
+        self.axes.plot(x,y,z, color='black')
         self.draw()
 
     def clearGraph(self):

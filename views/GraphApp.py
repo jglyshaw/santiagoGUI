@@ -2,6 +2,7 @@
 
 from PyQt6.QtWidgets import *
 from controllers.Graph3D import Graph3D
+from controllers.MLEngine import MLEngine
 import matlab.engine
 import random
 
@@ -10,15 +11,16 @@ class GraphApp(QWidget):
         super(GraphApp, self).__init__()
         self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
-        # self.eng = matlab.engine.start_matlab()
+        self.MLEngine = MLEngine()
         self.setLayout(self.window)
+        self.neuron = self.MLEngine.createNeuron(189, 't')
         self.initUI()
 
 
     def initUI(self):
         #buttons
         button = QPushButton("Graph")
-        button.clicked.connect(self.graphData)
+        button.clicked.connect(self.graphNeuron)
 
         clear = QPushButton("Clear")
         clear.clicked.connect(lambda : self.graph.clearGraph())
@@ -36,32 +38,27 @@ class GraphApp(QWidget):
         self.window.addWidget(move,3,0)
 
 
-    def graphData(self):
-        a  = 0
-        b = 4000
+    def graphNeuron(self):
+        nodes = self.MLEngine.nodes(self.neuron)
         x = []
         y = []
         z = []
+        for id, x1,y1,z1 in nodes:
+            x.append(x1)
+            y.append(y1)
+            z.append(z1)
 
-        for i in range(2000): 
-            a += 1
-            b -= 1
-            x.append(random.randint(a,b))
-            y.append(random.randint(a,b))
-            z.append(a)
-
-        self.graph.newPlot(x,y,z)
-
-    def graphData2(self):
-        x = list(self.eng.data()[0])
-        y = list(self.eng.data()[1])
-        z = list(self.eng.data()[2])
-
-        self.graph.newPlot(x,y,z)
+        self.graph.scatterPlot(x,y,z)
 
 
-if __name__ == "__main__":
-    app = QApplication([])
-    w = GraphApp()
-    w.show()
-    app.exec()
+        x = []
+        y = []
+        z = []
+        for i in range(20):
+            x.append(random.randrange(1,1000))
+            y.append(random.randrange(1,1000))
+            z.append(random.randrange(1,1000))
+        self.graph.linePlot(x,y,z)
+
+       
+
