@@ -16,8 +16,31 @@ class MLEngine():
         posy = self.eng.getfield(nodes,'Y')
         posz = self.eng.getfield(nodes,'Z')
 
-        neuronData = []
+        nodeData = {}
         for i in range(len(posx)):
-            neuronData.append((id,posx[i][0],posy[i][0],posz[i][0]))
+            currentid = id[i][0]
+            nodeData[int(currentid)] = (posx[i][0],posy[i][0],posz[i][0]) 
+        
+        return nodeData
 
-        return neuronData
+
+    def edges(self,neuron,nodesDict):
+        edges = self.eng.getfield(neuron, 'edges')
+        a = self.eng.getfield(edges,'A')
+        b = self.eng.getfield(edges,'B')
+        
+        edgeData = []
+
+        for i in range(len(a)):
+            edgeA = a[i][0]
+            edgeB = b[i][0]
+
+            nodeA = nodesDict[edgeA]
+            nodeB = nodesDict[edgeB]
+
+            edgeData.append((nodeA,nodeB))
+
+        return edgeData
+
+
+        

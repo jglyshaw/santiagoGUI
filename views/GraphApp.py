@@ -11,16 +11,20 @@ class GraphApp(QWidget):
         super(GraphApp, self).__init__()
         self.setWindowTitle("GraphApp")
         self.window = QGridLayout()
-        self.MLEngine = MLEngine()
         self.setLayout(self.window)
-        self.neuron = self.MLEngine.createNeuron(189, 't')
         self.initUI()
+
+        self.MLEngine = MLEngine()
+        self.neuron = self.MLEngine.createNeuron(182, 't')
 
 
     def initUI(self):
         #buttons
         button = QPushButton("Graph")
         button.clicked.connect(self.graphNeuron)
+
+        graph2 = QPushButton("Graph2")
+        graph2.clicked.connect(self.graphNeuron2)
 
         clear = QPushButton("Clear")
         clear.clicked.connect(lambda : self.graph.clearGraph())
@@ -36,6 +40,7 @@ class GraphApp(QWidget):
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,2,0)
         self.window.addWidget(move,3,0)
+        self.window.addWidget(graph2,4,0)
 
 
     def graphNeuron(self):
@@ -43,22 +48,33 @@ class GraphApp(QWidget):
         x = []
         y = []
         z = []
-        for id, x1,y1,z1 in nodes:
+
+        for id in nodes:
+            x1,y1,z1 = nodes[id]
             x.append(x1)
             y.append(y1)
             z.append(z1)
 
         self.graph.scatterPlot(x,y,z)
 
-
+       
+    def graphNeuron2(self):
+        nodes = self.MLEngine.nodes(self.neuron)
+        edges = self.MLEngine.edges(self.neuron, nodes)
+      
         x = []
         y = []
         z = []
-        for i in range(20):
-            x.append(random.randrange(1,1000))
-            y.append(random.randrange(1,1000))
-            z.append(random.randrange(1,1000))
+        for edge in edges:
+            
+            x.append(edge[0][0])
+            x.append(edge[1][0])
+            y.append(edge[0][1])
+            y.append(edge[1][1])
+            z.append(edge[0][2])
+            z.append(edge[1][2])
         self.graph.linePlot(x,y,z)
 
        
+
 

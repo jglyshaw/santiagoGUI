@@ -3,7 +3,7 @@ from matplotlib.figure import Figure
 
 class Graph3D(FigureCanvasQTAgg):
     def __init__(self):
-        self.fig = Figure(figsize=(100, 100), dpi=100)
+        self.fig = Figure(figsize=(100, 100), dpi=60)
         FigureCanvasQTAgg.__init__(self,self.fig)
         super(Graph3D, self).__init__(self.fig)
 
