@@ -15,7 +15,7 @@ class Graph3D(FigureCanvasQTAgg):
 
     def scatterPlot(self,x,y,z):
         self.fig.canvas.setFocus()
-        self.axes.scatter(x,y,z, color='b', marker='o', s=10)
+        self.axes.scatter(x,y,z, color='b', marker='o', s=5)
         self.draw()
 
     def linePlot(self,x,y,z):
@@ -71,7 +71,3 @@ class Graph3D(FigureCanvasQTAgg):
         if event.key == 'down':
             self.axes.view_init(elev = self.axes.elev - 5, azim = self.axes.azim)
             self.draw()
-
-
-
-    
