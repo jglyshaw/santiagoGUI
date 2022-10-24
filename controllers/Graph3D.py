@@ -3,7 +3,7 @@ from matplotlib.figure import Figure
 
 class Graph3D(FigureCanvasQTAgg):
     def __init__(self):
-        self.fig = Figure(figsize=(100, 100), dpi=60)
+        self.fig = Figure(figsize=(100, 100), dpi=70)
         FigureCanvasQTAgg.__init__(self,self.fig)
         super(Graph3D, self).__init__(self.fig)
 
@@ -12,15 +12,14 @@ class Graph3D(FigureCanvasQTAgg):
         self.axes=self.fig.add_subplot(111,projection="3d")
         self.fig.tight_layout()
     
+
     def scatterPlot(self,x,y,z):
         self.fig.canvas.setFocus()
-        self.axes.scatter(x,y,z, color='b', marker='o', s=0.5)
+        self.axes.scatter(x,y,z, color='b', marker='o', s=5)
         self.draw()
 
     def linePlot(self,x,y,z):
-        self.fig.canvas.setFocus()
         self.axes.plot(x,y,z, color='black')
-        self.draw()
 
     def clearGraph(self):
         self.axes.clear()
@@ -49,17 +48,26 @@ class Graph3D(FigureCanvasQTAgg):
 
     def on_press(self,event):
         if event.key == 'a':
-            self.moveX(0.01)
+            self.moveX(0.02)
         if event.key == 'd':
-            self.moveX(-0.01)
+            self.moveX(-0.02)
         if event.key == 'w':
-            self.moveY(0.01)
+            self.moveY(0.02)
         if event.key == 's':
-            self.moveY(-0.01)
+            self.moveY(-0.02)
+        if event.key == 'q':
+            self.moveZ(0.02)
+        if event.key == 'e':
+            self.moveZ(-0.02)
+        if event.key == 'left':
+            self.axes.view_init(elev = self.axes.elev, azim = self.axes.azim + 5)
+            self.draw()
+        if event.key == 'right':
+            self.axes.view_init(elev = self.axes.elev, azim = self.axes.azim - 5)
+            self.draw()
         if event.key == 'up':
-            self.moveZ(0.01)
+            self.axes.view_init(elev = self.axes.elev + 5, azim = self.axes.azim)
+            self.draw()
         if event.key == 'down':
-            self.moveZ(-0.01)
-
-
-    
+            self.axes.view_init(elev = self.axes.elev - 5, azim = self.axes.azim)
+            self.draw()
