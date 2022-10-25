@@ -8,9 +8,8 @@ class MLEngine():
         neuron = self.eng.Neuron(cell,type)
         return neuron
 
-    def nodes(self,neuron):
+    def nodesDictionary(self,neuron):
         nodes = self.eng.getfield(neuron, 'nodes')
-   
         id = self.eng.getfield(nodes,'ID')
         posx = self.eng.getfield(nodes,'X')
         posy = self.eng.getfield(nodes,'Y')
@@ -24,7 +23,7 @@ class MLEngine():
         return nodeData
 
 
-    def edges(self,neuron,nodesDict):
+    def edgesList(self,neuron,nodesDict):
         edges = self.eng.getfield(neuron, 'edges')
         a = self.eng.getfield(edges,'A')
         b = self.eng.getfield(edges,'B')
@@ -43,4 +42,11 @@ class MLEngine():
         return edgeData
 
 
-        
+#example using MLEngine
+if __name__ == "__main__":
+    mlEng = MLEngine()
+
+    print(mlEng.eng.ones(3)) #using it directly
+
+    n = mlEng.createNeuron(182,'t') #using abstracted function
+    print(n)

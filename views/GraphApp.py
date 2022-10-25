@@ -13,7 +13,7 @@ class GraphApp(QWidget):
         self.initUI()
 
         self.MLEngine = MLEngine()
-        self.neuron = self.MLEngine.createNeuron(182, 't')
+        self.neuron = self.MLEngine.createNeuron(185, 't')
 
 
     def initUI(self):
@@ -42,7 +42,7 @@ class GraphApp(QWidget):
 
 
     def graphNodes(self):
-        nodes = self.MLEngine.nodes(self.neuron)
+        nodes = self.MLEngine.nodesDictionary(self.neuron)
         x = []
         y = []
         z = []
@@ -55,15 +55,10 @@ class GraphApp(QWidget):
 
        
     def graphEdges(self):
-        nodes = self.MLEngine.nodes(self.neuron)
-        edges = self.MLEngine.edges(self.neuron, nodes)
+        nodes = self.MLEngine.nodesDictionary(self.neuron)
+        edges = self.MLEngine.edgesList(self.neuron, nodes)
 
-        for edge in edges:
-            x = [edge[0][0],edge[1][0]]
-            y = [edge[0][1],edge[1][1]]
-            z = [edge[0][2],edge[1][2]]
-            self.graph.linePlot(x,y,z)
-        self.graph.draw()
+        self.graph.linePlot(edges)
         self.graph.fig.canvas.setFocus()
        
 
