@@ -1,8 +1,9 @@
 
 
-from PyQt6.QtWidgets import *
+from PyQt5.QtWidgets import *
 from controllers.Graph3D import Graph3D
 from controllers.MLEngine import MLEngine
+from controllers.Plot import PlotLy
 
 class GraphApp(QWidget):
     def __init__(self): 
@@ -31,10 +32,10 @@ class GraphApp(QWidget):
         move.clicked.connect(lambda : self.graph.hide_background())
         
         #graph component
-        self.graph = Graph3D()
+        self.graph = PlotLy()
 
         #add widgets
-        self.window.addWidget(self.graph,0,0)
+        self.window.addWidget(self.graph.browser,0,0)
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,4,0)
         self.window.addWidget(move,3,0)
@@ -42,16 +43,8 @@ class GraphApp(QWidget):
 
 
     def graphNodes(self):
-        nodes = self.MLEngine.nodesDictionary(self.neuron)
-        x = []
-        y = []
-        z = []
-        for id in nodes:
-            x1,y1,z1 = nodes[id]
-            x.append(x1)
-            y.append(y1)
-            z.append(z1)
-        self.graph.scatterPlot(x,y,z)
+
+        self.graph.graph()
 
        
     def graphEdges(self):
