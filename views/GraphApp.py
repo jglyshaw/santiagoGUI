@@ -34,10 +34,10 @@ class GraphApp(QWidget):
         move.clicked.connect(lambda : self.graph.hide_background())
         
         #graph component
-        self.graph = Graph3D()
+        self.graph = PlotLy()
 
         #add widgets
-        self.window.addWidget(self.graph,0,0)
+        self.window.addWidget(self.graph.browser,0,0)
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,4,0)
         self.window.addWidget(move,3,0)
@@ -62,7 +62,7 @@ class GraphApp(QWidget):
         #     a = line[0]
         #     b = line[1]
         #     self.graph.linePlot([a[0],b[0]],[a[1],b[1]],[a[2],b[2]])
-        self.graph.linePlot(edges)
+        # self.graph.linePlot(edges)
         surface = self.mlEngine.eng.GetSurface(neuron)
 
 
@@ -77,8 +77,9 @@ class GraphApp(QWidget):
             x = np.concatenate((x, segment[0]))
             y = np.concatenate((y, segment[1]))
             z = np.concatenate((z, segment[2]))
-        surf = self.graph.surfacePlot(x, y, z)
-        self.graph.draw()
+        self.graph.surfacePlot(x, y, z)
+
+        self.graph.update()
 
 
         print("done1")

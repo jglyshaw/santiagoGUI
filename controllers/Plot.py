@@ -50,13 +50,6 @@ class PlotLy():
         self.fig.add_trace(go.Surface(x=x, y=y, z=z, opacity=0.2))
 
     def move(self):
-        print(self.fig._layout)
-        self.fig.update_layout(
-        scene = dict(
-        xaxis = dict(nticks=4, range=[-1,1],),
-        yaxis = dict(nticks=4, range=[-1,1],),
-        zaxis = dict(nticks=4, range=[-1,1],),)
-        )
         self.update()
 
 
