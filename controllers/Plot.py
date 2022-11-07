@@ -29,12 +29,7 @@ class PlotLy():
         self.browser.show()
         self.browser.raise_()
 
-    def graph(self):
-        z = np.linspace(0, 1, 100)
-        x = z * np.sin(25 * z)
-        y = z * np.cos(25 * z)
-        self.fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode="lines", line_color="green", line_width=3))
-   
+    def update(self):
         raw_html = '<html><head><meta charset="utf-8" />'
         raw_html += '<script src="https://cdn.plot.ly/plotly-latest.min.js"></script></head>'
         raw_html += '<body>'
@@ -44,3 +39,25 @@ class PlotLy():
         self.browser.setHtml(raw_html)
         self.browser.show()
         self.browser.raise_()
+
+    def scatterPlot(self, x,y,z):     
+        self.fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode="markers", showlegend=False, marker=dict(size=3), opacity=0.8))
+
+    def linePlot(self, x,y,z):     
+        self.fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode="lines", showlegend=False, line=dict(color="#0000ff")))
+
+    def move(self):
+        print(self.fig._layout)
+        self.fig.update_layout(
+        scene = dict(
+        xaxis = dict(nticks=4, range=[-1,1],),
+        yaxis = dict(nticks=4, range=[-1,1],),
+        zaxis = dict(nticks=4, range=[-1,1],),)
+        )
+        self.update()
+
+
+
+        
+
+    

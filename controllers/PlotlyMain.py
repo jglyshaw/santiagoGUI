@@ -1,16 +1,23 @@
-import sys
+# Importing Libraries
+import plotly.graph_objs as go
+import numpy as np
 
-from PyQt5.QtWidgets import QApplication, QGridLayout, QMainWindow, QTextEdit, QWidget
-from Plot import PlotLy
+np.random.seed(3)
 
-app = QApplication(sys.argv)
+# generating numbers ranging from 0 to 18 on X-axis
+x = list(range(0,20,2))
 
-w = QMainWindow()
+# generating random numbers on y-axis
+y = np.random.randn(10)
 
-browser = PlotLy()
+z = np.random.randn(10)
 
-central_widget = QWidget()
-w.setCentralWidget(browser.browser)
-w.show()
+# plotting scatter plot on x and y data with
+# 'lines' as mode
+fig = go.Figure(data=go.Scatter3d(x=x, y=y, z=z))
 
-sys.exit(app.exec_())
+# setting the y-axis range from -3 to 3
+fig.update_layout(yaxis_range=[-10,10])
+
+# to display the figure in the output screen
+fig.show()

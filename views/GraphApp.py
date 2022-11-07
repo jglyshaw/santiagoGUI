@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 from controllers.Graph3D import Graph3D
 from controllers.MLEngine import MLEngine
 from controllers.Plot import PlotLy
+from matplotlib import cm
+import numpy as np
 
 class GraphApp(QWidget):
     def __init__(self): 
@@ -13,8 +15,8 @@ class GraphApp(QWidget):
         self.setLayout(self.window)
         self.initUI()
 
-        self.MLEngine = MLEngine()
-        self.neuron = self.MLEngine.createNeuron(185, 't')
+        self.mlEngine = MLEngine()
+        
 
 
     def initUI(self):
@@ -43,16 +45,43 @@ class GraphApp(QWidget):
 
 
     def graphNodes(self):
+        neuron = self.mlEngine.createNeuron(185, 't')
+        nodes = self.mlEngine.nodesDictionary(neuron)
+        edges = self.mlEngine.edgesList(neuron, nodes)
+        x = []
+        y = []
+        z = []
+        for id in nodes:
+            x1,y1,z1,area1 = nodes[id]
+            x.append(x1)
+            y.append(y1)
+            z.append(z1)
+        self.graph.scatterPlot(x,y,z)
 
-        self.graph.graph()
+        for line in edges:
+            a = line[0]
+            b = line[1]
+            self.graph.linePlot([a[0],b[0]],[a[1],b[1]],[a[2],b[2]])
+
+        self.graph.update()
+        surface = self.mlEngine.eng.GetSurface(neuron)
+
+        
+
+        for segment in surface:
+            x = np.asarray(segment[0])
+            y = np.asarray(segment[1])
+            z = np.asarray(segment[2])
+            surf = self.graph.axes.plot_surface(x, y, z, cmap=cm.coolwarm,
+                            linewidth=0, antialiased=False, alpha=0.3)
+
+        self.graph.fig.canvas.setFocus()
+
+        # self.graph.graph()
 
        
     def graphEdges(self):
-        nodes = self.MLEngine.nodesDictionary(self.neuron)
-        edges = self.MLEngine.edgesList(self.neuron, nodes)
-
-        self.graph.linePlot(edges)
-        self.graph.fig.canvas.setFocus()
+        self.graph.move()
        
 
 
