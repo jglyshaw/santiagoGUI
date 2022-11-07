@@ -46,6 +46,9 @@ class PlotLy():
     def linePlot(self, x,y,z):     
         self.fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode="lines", showlegend=False, line=dict(color="#0000ff")))
 
+    def surfacePlot(self, x,y,z):     
+        self.fig.add_trace(go.Surface(x=x, y=y, z=z, opacity=0.2))
+
     def move(self):
         print(self.fig._layout)
         self.fig.update_layout(

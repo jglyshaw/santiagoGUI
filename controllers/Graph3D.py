@@ -2,6 +2,7 @@ import matplotlib
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+from matplotlib import cm
 from mpl_toolkits.mplot3d.art3d import Line3DCollection
 
 class Graph3D(FigureCanvasQTAgg):
@@ -28,6 +29,10 @@ class Graph3D(FigureCanvasQTAgg):
         lc = Line3DCollection(data, color="black")
         self.axes.add_collection3d(lc)
         self.draw()
+
+    def surfacePlot(self, x,y,z):     
+        self.axes.plot_surface(x, y, z, cmap=cm.coolwarm,
+                            linewidth=0, antialiased=False, alpha=0.3)
 
     def clearGraph(self):
         self.axes.clear()

@@ -34,10 +34,10 @@ class GraphApp(QWidget):
         move.clicked.connect(lambda : self.graph.hide_background())
         
         #graph component
-        self.graph = PlotLy()
+        self.graph = Graph3D()
 
         #add widgets
-        self.window.addWidget(self.graph.browser,0,0)
+        self.window.addWidget(self.graph,0,0)
         self.window.addWidget(button,1,0)
         self.window.addWidget(clear,4,0)
         self.window.addWidget(move,3,0)
@@ -45,7 +45,7 @@ class GraphApp(QWidget):
 
 
     def graphNodes(self):
-        neuron = self.mlEngine.createNeuron(185, 't')
+        neuron = self.mlEngine.createNeuron(182, 't')
         nodes = self.mlEngine.nodesDictionary(neuron)
         edges = self.mlEngine.edgesList(neuron, nodes)
         x = []
@@ -58,26 +58,32 @@ class GraphApp(QWidget):
             z.append(z1)
         self.graph.scatterPlot(x,y,z)
 
-        for line in edges:
-            a = line[0]
-            b = line[1]
-            self.graph.linePlot([a[0],b[0]],[a[1],b[1]],[a[2],b[2]])
-
-        self.graph.update()
+        # for line in edges:
+        #     a = line[0]
+        #     b = line[1]
+        #     self.graph.linePlot([a[0],b[0]],[a[1],b[1]],[a[2],b[2]])
+        self.graph.linePlot(edges)
         surface = self.mlEngine.eng.GetSurface(neuron)
 
-        
 
+        x = np.asarray(surface[0][0])
+        y = np.asarray(surface[0][1])
+        z = np.asarray(surface[0][2])
+        i = 0
         for segment in surface:
-            x = np.asarray(segment[0])
-            y = np.asarray(segment[1])
-            z = np.asarray(segment[2])
-            surf = self.graph.axes.plot_surface(x, y, z, cmap=cm.coolwarm,
-                            linewidth=0, antialiased=False, alpha=0.3)
+            if i == 0:
+                i += 1
+                continue
+            x = np.concatenate((x, segment[0]))
+            y = np.concatenate((y, segment[1]))
+            z = np.concatenate((z, segment[2]))
+        surf = self.graph.surfacePlot(x, y, z)
+        self.graph.draw()
 
-        self.graph.fig.canvas.setFocus()
 
-        # self.graph.graph()
+        print("done1")
+        print("done")
+
 
        
     def graphEdges(self):
